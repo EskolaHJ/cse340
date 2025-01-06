@@ -9,7 +9,7 @@
 
 /******* Page Background ***************/
 body {
-    background: url('/images/site/checkered-bg.png') repeat;
+    background: url('/images/site/checkerboard.jpg') repeat;
     font-family: Arial, sans-serif;
     text-align: center;
 }
@@ -23,13 +23,12 @@ body {
     border: 5px solid lightblue;
 }
 
-/******* Navigation Bar ***************/
+/******* Navigation Bar Fix ***************/
 nav {
-    background-color: black;
-    padding: 10px;
+    background-color: black; /* Ensure nav background is black */
+    padding: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
 }
 
 nav ul {
@@ -37,18 +36,27 @@ nav ul {
     display: flex;
     padding: 0;
     margin: 0;
+    gap: 30px; /* Space out nav items */
 }
 
 nav ul li {
-    margin: 0 15px;
+    display: inline-block;
 }
 
 nav ul li a {
-    color: white;
+    color: white !important; /* Force white text */
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: bold;
+    padding: 10px 15px;
+    background: none; /* Ensure no unwanted background */
+    transition: color 0.3s ease;
 }
+
+nav ul li a:hover {
+    color: lightblue; /* Change color on hover */
+}
+
 
 .account {
     color: lightgray;
