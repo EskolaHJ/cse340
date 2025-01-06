@@ -1,6 +1,175 @@
-/******* Change Box Model ***************/
+/******* Box Model Reset ***************/
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/******* Page Background ***************/
+body {
+    background: url('/images/site/checkered-bg.png') repeat;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/******* Wrapper (Main Content Box) ***************/
+#wrapper {
+    background: white;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 5px solid lightblue;
+}
+
+/******* Navigation Bar ***************/
+nav {
+    background-color: black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.account {
+    color: lightgray;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/******* Hero Section ***************/
+.hero {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 40%;
+    left: 5%;
+    width: 90%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.overlay h2 {
+    color: #007BFF;
+    font-size: 1.5rem;
+}
+
+.cta {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/******* Columns Layout ***************/
+.columns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/******* Upgrades & Reviews Section ***************/
+.upgrades, .reviews {
+    width: 100%;
+    padding: 10px;
+}
+
+/******* Grid for Upgrades ***************/
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.item {
+    background: lightblue;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid #ddd;
+}
+
+.item img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+}
+
+.item p a {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+
+/******* Footer ***************/
+footer {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    padding: 10px;
+    background-color: black;
+    color: white;
+}
+
+/******* Media Query for Larger Screens ***************/
+@media (min-width: 768px) {
+    .columns {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .overlay {
+        left: 10%;
+        width: auto;
+        padding: 20px;
+    }
+
+    .overlay h2 {
+        font-size: 1.8rem;
+    }
+
+    .cta {
+        font-size: 1.2rem;
+    }
+
+    .upgrades, .reviews {
+        width: 48%;
+    }
 }
