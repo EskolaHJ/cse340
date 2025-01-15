@@ -12,31 +12,60 @@ body {
     background: url('/images/site/checkerboard.jpg') repeat;
     font-family: Arial, sans-serif;
     text-align: center;
+    color: #333;
 }
 
 /******* Wrapper (Main Content Box) ***************/
 #wrapper {
-    background: white;
     max-width: 900px;
     margin: 20px auto;
     padding: 20px;
+    background: white;
     border: 5px solid lightblue;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/******* Navigation Bar Fix ***************/
-nav {
-    background-color: black; /* Ensure nav background is black */
-    padding: 15px;
+/******* Header Section ***************/
+header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    border-bottom: 2px solid lightblue;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+header a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+header a:hover {
+    color: lightblue;
+}
+
+/******* Navigation Bar ***************/
+nav {
+    background: black;
+    padding: 15px 0;
 }
 
 nav ul {
     list-style: none;
     display: flex;
+    justify-content: center;
+    gap: 30px;
     padding: 0;
     margin: 0;
-    gap: 30px; /* Space out nav items */
 }
 
 nav ul li {
@@ -44,30 +73,21 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white !important; /* Force white text */
     text-decoration: none;
+    color: white;
     font-size: 1.2rem;
     font-weight: bold;
     padding: 10px 15px;
-    background: none; /* Ensure no unwanted background */
     transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: lightblue; /* Change color on hover */
-}
-
-
-.account {
-    color: lightgray;
-    text-decoration: none;
-    font-size: 0.9rem;
+    color: lightblue;
 }
 
 /******* Hero Section ***************/
 .hero {
     position: relative;
-    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -88,18 +108,29 @@ nav ul li a:hover {
 }
 
 .overlay h2 {
-    color: #007BFF;
     font-size: 1.5rem;
+    color: #007BFF;
+}
+
+.overlay p {
+    margin: 5px 0;
 }
 
 .cta {
+    display: inline-block;
+    padding: 10px 15px;
     background: #007BFF;
     color: white;
     border: none;
-    padding: 10px 15px;
-    cursor: pointer;
     font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
     margin-top: 10px;
+}
+
+.cta:hover {
+    background: #0056b3;
 }
 
 /******* Columns Layout ***************/
@@ -108,15 +139,20 @@ nav ul li a:hover {
     flex-direction: column;
     gap: 20px;
     margin-top: 20px;
-}
-
-/******* Upgrades & Reviews Section ***************/
-.upgrades, .reviews {
-    width: 100%;
     padding: 10px;
 }
 
-/******* Grid for Upgrades ***************/
+/******* Upgrades & Reviews ***************/
+.upgrades, .reviews {
+    width: 100%;
+}
+
+.upgrades {
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 8px;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -141,22 +177,28 @@ nav ul li a:hover {
     text-decoration: none;
     color: blue;
     font-weight: bold;
+    transition: color 0.3s;
 }
 
-/******* Footer ***************/
+.item p a:hover {
+    color: darkblue;
+}
+
+/******* Footer Section ***************/
 footer {
     margin-top: 20px;
-    font-size: 0.8rem;
     padding: 10px;
     background-color: black;
     color: white;
+    font-size: 0.8rem;
+    text-align: center;
 }
 
-/******* Media Query for Larger Screens ***************/
+/******* Media Queries ***************/
 @media (min-width: 768px) {
     .columns {
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
     }
 
     .grid {
