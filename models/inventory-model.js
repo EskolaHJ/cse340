@@ -31,7 +31,7 @@ async function getInventoryByClassificationId(classification_id) {
 /* ***************************
  *  Get a specific vehicle by inventory ID
  * ************************** */
-async function getVehicleById(inv_id) {
+async function getVehicleById(invId) {
     try {
         const data = await pool.query(
             `SELECT * FROM public.inventory WHERE inv_id = $1`, [inv_id]
