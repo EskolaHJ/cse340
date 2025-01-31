@@ -16,10 +16,11 @@ async function getClassifications() {
 /* ***************************
  *  Get inventory by classification ID
  * ************************** */
-async function getInventoryByClassificationId(classification_id) {
+async function getInventoryByClassificationId(classificationId) {
     try {
+        console.log("Fetching inventory for classification ID:", classificationId); // ✅ Debugging log
         const data = await pool.query(
-            `SELECT * FROM public.inventory WHERE classification_id = $1`, [classification_id]
+            `SELECT * FROM public.inventory WHERE classification_id = $1`, [classificationId]
         );
         return data.rows;
     } catch (error) {
@@ -31,12 +32,13 @@ async function getInventoryByClassificationId(classification_id) {
 /* ***************************
  *  Get a specific vehicle by inventory ID
  * ************************** */
-async function getVehicleById(invId) {
+async function getVehicleById(invId) { // ✅ Fix incorrect variable
     try {
+        console.log("Fetching vehicle with ID:", invId); // ✅ Debugging log
         const data = await pool.query(
-            `SELECT * FROM public.inventory WHERE inv_id = $1`, [inv_id]
+            `SELECT * FROM public.inventory WHERE inv_id = $1`, [invId] // ✅ Fix incorrect variable
         );
-        return data.rows[0]; // Return a single vehicle object
+        return data.rows[0]; // ✅ Return a single vehicle object
     } catch (error) {
         console.error("getVehicleById error:", error);
         throw error;

@@ -8,23 +8,30 @@ const invCont = {};
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   try {
-    const classification_id = req.params.classificationId;
-    const data = await invModel.getInventoryByClassificationId(classification_id);
-    
+    const classificationId = req.params.classificationId; // ✅ Consistent naming
+    console.log("Classification ID received:", classificationId); // ✅ Debugging log
+
+    const data = await invModel.getInventoryByClassificationId(classificationId);
+
     if (!data || data.length === 0) {
-      return res.status(404).render("errors/404", { title: "Not Found", message: "No vehicles found for this classification." });
+      console.warn("No vehicles found for classification:", classificationId);
+      return res.status(404).render("errors/404", { 
+        title: "Not Found", 
+        message: "No vehicles found for this classification." 
+      });
     }
 
     const grid = await utilities.buildClassificationGrid(data);
     let nav = await utilities.getNav();
     const className = data[0].classification_name;
-    
+
     res.render("./inventory/classification", {
-      title: className + " vehicles",
+      title: `${className} vehicles`,
       nav,
       grid,
     });
   } catch (error) {
+    console.error("Error fetching classification inventory:", error);
     next(error);
   }
 };
@@ -34,23 +41,35 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ************************** */
 invCont.getVehicleDetail = async function (req, res, next) {
   try {
-    const invId = req.params.invId;
-    const vehicle = await invModel.getVehicleById(inv_id);
-    
-    if (!vehicle) {
-      return res.status(404).render("errors/404", { title: "Not Found", message: "Vehicle not found" });
+    const invId = req.params.invId; // ✅ Use the correct parameter name
+    console.log("Vehicle ID received:", invId); // ✅ Debugging log
+
+    if (!invId) {
+      console.error("Error: Missing invId");
+      return res.status(400).send("Invalid vehicle ID.");
     }
 
-    const vehicleHtml = utilities.buildVehicleDetailHTML(vehicle);
+    const vehicle = await invModel.getVehicleById(invId); // ✅ Use invId
+    console.log("Vehicle retrieved from DB:", vehicle); // ✅ Log fetched data
+
+    if (!vehicle) {
+      console.warn("Vehicle not found in DB, ID:", invId);
+      return res.status(404).render("errors/404", { 
+        title: "Not Found", 
+        message: "Vehicle not found" 
+      });
+    }
+
     let nav = await utilities.getNav();
-    
+
     res.render("./inventory/detail", {
-      title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
+      title: `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`,
       nav,
-      vehicleHtml,
+      vehicle, // ✅ Pass vehicle directly to EJS
     });
   } catch (error) {
-    next(error);  // Pass error to middleware
+    console.error("Error fetching vehicle details:", error);
+    next(error);
   }
 };
 
