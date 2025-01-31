@@ -1,5 +1,24 @@
 const invModel = require("../models/inventory-model");
 const Util = {};
+const pool = require("../database/");
+
+/* ***************************
+ *  Get all classification data
+ * ************************** */
+async function getClassifications() {
+    try {
+        const result = await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
+        return result.rows;
+    } catch (error) {
+        console.error("getClassifications error:", error);
+        throw error;
+    }
+}
+
+module.exports = {
+    getClassifications
+};
+
 
 /* ************************
  * Constructs the nav HTML unordered list
