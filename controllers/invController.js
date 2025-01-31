@@ -62,6 +62,9 @@ invCont.getVehicleDetail = async function (req, res, next) {
 
     let nav = await utilities.getNav();
 
+    console.log("Rendering details.ejs for:", vehicle.inv_make, vehicle.inv_model);
+
+
     res.render("inventory/details", {
       title: `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`,
       nav,

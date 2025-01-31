@@ -80,11 +80,11 @@ Util.buildClassificationGrid = async function(data){
   Util.buildVehicleDetailHTML = function (vehicle) {
     return ` 
       <div class="vehicle-detail">
-        <h1>${vehicle.in_year} ${vehicle.inv_make} ${vehicle.inv_model}</h1>
+        <h1>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h1>
         <div class="vehicle-layout">
-          <img src="${vehicle.inv_image}" alt="${vehicle.inv_make} ${vehicle.inv_model}>
+          <img src="${vehicle.inv_image}" alt="${vehicle.inv_make} ${vehicle.inv_model}">
           <div class="vehicle-info">
-            <p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</P>
+            <p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</p>
             <p><strong>Mileage:</strong> ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)} miles</p>
             <p><strong>Color:</strong> ${vehicle.inv_color}</p>
             <p><strong>Description:</strong> ${vehicle.inv_description}</p>
@@ -93,5 +93,6 @@ Util.buildClassificationGrid = async function(data){
       </div>
     `;
   };
+  
 
 module.exports = Util;
