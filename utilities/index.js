@@ -4,27 +4,40 @@ const Util = {}
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
+Util.getNav = async function () {
+  try {
+    let data = await invModel.getClassifications();
+    
+    // ✅ Handle the case where data is `undefined` or not an array
+    if (!data || !Array.isArray(data)) {
+      console.error("getNav Error: getClassifications() returned invalid data:", data);
+      return "<ul><li>Error loading navigation</li></ul>";
+    }
 
-module.exports = Util
+    let list = "<ul>";
+    list += '<li><a href="/" title="Home page">Home</a></li>';
+    
+    data.forEach((row) => {
+      list += "<li>";
+      list +=
+        '<a href="/inv/type/' +
+        row.classification_id +
+        '" title="See our inventory of ' +
+        row.classification_name +
+        ' vehicles">' +
+        row.classification_name +
+        "</a>";
+      list += "</li>";
+    });
+
+    list += "</ul>";
+    return list;
+  } catch (error) {
+    console.error("getNav error:", error);
+    return "<ul><li>Error loading navigation</li></ul>";
+  }
+};
+
 
 
 
