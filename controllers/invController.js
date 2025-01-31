@@ -34,7 +34,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ************************** */
 invCont.getVehicleDetail = async function (req, res, next) {
   try {
-    const inv_id = req.params.invId;
+    const invId = req.params.invId;
     const vehicle = await invModel.getVehicleById(inv_id);
     
     if (!vehicle) {
