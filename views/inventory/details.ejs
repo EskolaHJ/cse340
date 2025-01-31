@@ -4,7 +4,9 @@
     <div class="vehicle-detail">
         <h1><%= title %></h1>
         <div class="vehicle-layout">
-            <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+            <img src="<%= vehicle.inv_image.startsWith('/') ? vehicle.inv_image : '/images/' + vehicle.inv_image %>" 
+     alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+
             <div class="vehicle-info">
                 <p><strong>Price:</strong> $<%= vehicle.inv_price.toLocaleString("en-US") %></p>
                 <p><strong>Mileage:</strong> <%= vehicle.inv_miles.toLocaleString("en-US") %> miles</p>
