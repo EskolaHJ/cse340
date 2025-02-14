@@ -1,0 +1,89 @@
+<!-- views/account/register.ejs -->
+
+<h1><%= title %></h1>
+
+<!-- Display flash error messages, if any -->
+<% if (messages && messages.error) { %>
+  <div class="alert alert-danger">
+    <% messages.error.forEach(function(msg) { %>
+      <p><%= msg %></p>
+    <% }); %>
+  </div>
+<% } %>
+
+<!-- Display flash success messages, if any -->
+<% if (messages && messages.success) { %>
+  <div class="alert alert-success">
+    <% messages.success.forEach(function(msg) { %>
+      <p><%= msg %></p>
+    <% }); %>
+  </div>
+<% } %>
+
+<!-- Registration Form -->
+<form action="/account/register" method="POST">
+  <!-- First Name -->
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input 
+      type="text" 
+      name="firstName" 
+      id="firstName" 
+      placeholder="Enter your first name" 
+      required
+      data-trail="firstName">
+  </div>
+
+  <!-- Last Name -->
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input 
+      type="text" 
+      name="lastName" 
+      id="lastName" 
+      placeholder="Enter your last name" 
+      required
+      data-trail="lastName">
+  </div>
+
+  <!-- Email Address -->
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input 
+      type="email" 
+      name="email" 
+      id="email" 
+      placeholder="Enter your email" 
+      required
+      data-trail="email">
+  </div>
+
+  <!-- Password -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input 
+      type="password" 
+      name="password" 
+      id="password" 
+      placeholder="Create a password" 
+      required
+      minlength="12"
+      data-trail="password">
+    <!-- Optional toggle for password visibility -->
+    <button type="button" id="togglePassword">Show/Hide Password</button>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+
+<script>
+  // Optional: Toggle password visibility
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordField = document.getElementById('password');
+
+  togglePassword.addEventListener('click', function () {
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    this.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+  });
+</script>
