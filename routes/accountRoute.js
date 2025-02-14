@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const regValidate = require('../utilities/account-validation')
 
 // Access the utilities
 const utilities = require('../utilities'); // Ensure this resolves correctly
@@ -17,5 +18,20 @@ router.get('/register', accountController.buildRegister);
 
 // Route to post register
 router.post('/register', accountController.registerAccount)
+
+// Process the registration data
+router.post(
+    "/register",
+    regValidate.registrationRules(),
+    regValidate.checkRegData,
+    utilities.handleErrors(accountController.registerAccount)
+)
+router.post(
+    "/login",
+    (req, res) => {
+        res.status(200).send('login process')
+    }
+)
+
 // Export the router for use in your main application file
 module.exports = router;

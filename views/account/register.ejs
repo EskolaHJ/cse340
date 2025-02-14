@@ -1,5 +1,3 @@
-<!-- views/account/register.ejs -->
-
 <h1><%= title %></h1>
 
 <!-- Display flash error messages, if any -->
@@ -20,55 +18,73 @@
   </div>
 <% } %>
 
+<!-- Display server-side validation errors, if any -->
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
 <!-- Registration Form -->
 <form action="/account/register" method="POST">
   <!-- First Name -->
   <div class="form-group">
-    <label for="firstName">First Name</label>
+    <label for="account_firstname">First Name</label>
     <input 
       type="text" 
-      name="firstName" 
-      id="firstName" 
+      name="account_firstname" 
+      id="account_firstname" 
       placeholder="Enter your first name" 
       required
-      data-trail="firstName">
+      data-trail="account_firstname"
+      value="<%= typeof account_firstname !== 'undefined' ? account_firstname : '' %>">
   </div>
 
   <!-- Last Name -->
   <div class="form-group">
-    <label for="lastName">Last Name</label>
+    <label for="account_lastname">Last Name</label>
     <input 
       type="text" 
-      name="lastName" 
-      id="lastName" 
+      name="account_lastname" 
+      id="account_lastname" 
       placeholder="Enter your last name" 
       required
-      data-trail="lastName">
+      data-trail="account_lastname"
+      value="<%= typeof account_lastname !== 'undefined' ? account_lastname : '' %>">
   </div>
 
   <!-- Email Address -->
   <div class="form-group">
-    <label for="email">Email Address</label>
+    <label for="account_email">Email Address</label>
     <input 
       type="email" 
-      name="email" 
-      id="email" 
-      placeholder="Enter your email" 
+      name="account_email" 
+      id="account_email" 
+      placeholder="Enter your email address" 
       required
-      data-trail="email">
+      data-trail="account_email"
+      value="<%= typeof account_email !== 'undefined' ? account_email : '' %>">
   </div>
 
   <!-- Password -->
   <div class="form-group">
-    <label for="password">Password</label>
+    <label for="account_password">Password</label>
+    <!-- Instructions for password requirements -->
+    <div class="password-requirements">
+      <p>
+        Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter, and 1 special character.
+      </p>
+    </div>
     <input 
       type="password" 
-      name="password" 
-      id="password" 
+      name="account_password" 
+      id="account_password" 
       placeholder="Create a password" 
       required
-      minlength="12"
-      data-trail="password">
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      data-trail="account_password">
     <!-- Optional toggle for password visibility -->
     <button type="button" id="togglePassword">Show/Hide Password</button>
   </div>
@@ -77,9 +93,9 @@
 </form>
 
 <script>
-  // Optional: Toggle password visibility
+  // Toggle password visibility
   const togglePassword = document.getElementById('togglePassword');
-  const passwordField = document.getElementById('password');
+  const passwordField = document.getElementById('account_password');
 
   togglePassword.addEventListener('click', function () {
     const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';

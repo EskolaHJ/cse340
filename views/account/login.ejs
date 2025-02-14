@@ -23,23 +23,31 @@
 <!-- Login Form -->
 <form action="/account/login" method="POST">
   <div class="form-group">
-    <label for="email">Email Address</label>
+    <label for="account_email">Email Address</label>
     <input 
       type="email" 
-      name="email" 
-      id="email" 
+      name="account_email" 
+      id="account_email" 
       placeholder="Enter your email" 
-      required>
+      required
+      data-trail="account_email">
   </div>
 
   <div class="form-group">
-    <label for="password">Password</label>
+    <label for="account_password">Password</label>
+    <div class="password-requirements">
+      <p>
+        Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter, and 1 special character.
+      </p>
+    </div>
     <input 
       type="password" 
-      name="password" 
-      id="password" 
+      name="account_password" 
+      id="account_password" 
       placeholder="Enter your password" 
-      required>
+      required
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      data-trail="account_password">
   </div>
 
   <button type="submit">Login</button>
