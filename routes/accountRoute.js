@@ -22,7 +22,7 @@ router.post('/register', accountController.registerAccount)
 // Process the registration data
 router.post(
     "/register",
-    regValidate.registrationRules(),
+    regValidate.registrationRule(),
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
 )
