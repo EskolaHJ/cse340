@@ -1,0 +1,140 @@
+<!-- views/inventory/add-inventory.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1><%= title %></h1>
+
+  <!-- Flash Messages -->
+  <% if (messages && messages.notice) { %>
+    <div class="alert alert-info">
+      <% messages.notice.forEach(function(msg) { %>
+        <p><%= msg %></p>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <!-- Server-side Validation Errors -->
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <!-- Add Inventory Form -->
+  <form action="/inv/add-inventory" method="POST" enctype="multipart/form-data">
+    
+    <!-- Classification Dropdown -->
+    <div class="form-group">
+      <label for="classificationList">Classification</label>
+      <!-- The classification dropdown is built in the utility and passed from the controller -->
+      <%- classificationList %>
+    </div>
+    
+    <!-- Vehicle Make -->
+    <div class="form-group">
+      <label for="inv_make">Make</label>
+      <input type="text" 
+             name="inv_make" 
+             id="inv_make" 
+             placeholder="Enter vehicle make" 
+             required
+             value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>">
+    </div>
+
+    <!-- Vehicle Model -->
+    <div class="form-group">
+      <label for="inv_model">Model</label>
+      <input type="text" 
+             name="inv_model" 
+             id="inv_model" 
+             placeholder="Enter vehicle model" 
+             required
+             value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>">
+    </div>
+
+    <!-- Vehicle Description -->
+    <div class="form-group">
+      <label for="inv_description">Description</label>
+      <textarea name="inv_description" 
+                id="inv_description" 
+                placeholder="Enter vehicle description" 
+                required><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
+    </div>
+
+    <!-- Vehicle Image Path -->
+    <div class="form-group">
+      <label for="inv_image">Vehicle Image Path</label>
+      <input type="text" 
+             name="inv_image" 
+             id="inv_image" 
+             placeholder="/images/vehicles/no-image.png" 
+             required
+             value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>">
+    </div>
+
+    <!-- Vehicle Thumbnail Path -->
+    <div class="form-group">
+      <label for="inv_thumbnail">Vehicle Thumbnail Path</label>
+      <input type="text" 
+             name="inv_thumbnail" 
+             id="inv_thumbnail" 
+             placeholder="/images/vehicles/no-image-tn.png" 
+             required
+             value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image-tn.png' %>">
+    </div>
+
+    <!-- Vehicle Price -->
+    <div class="form-group">
+      <label for="inv_price">Price</label>
+      <input type="number" 
+             name="inv_price" 
+             id="inv_price" 
+             placeholder="Enter vehicle price" 
+             required
+             value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>">
+    </div>
+
+    <!-- Vehicle Year -->
+    <div class="form-group">
+      <label for="inv_year">Year</label>
+      <input type="number" 
+             name="inv_year" 
+             id="inv_year" 
+             placeholder="Enter vehicle year" 
+             required
+             value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>">
+    </div>
+
+    <!-- Vehicle Mileage -->
+    <div class="form-group">
+      <label for="inv_miles">Mileage</label>
+      <input type="number" 
+             name="inv_miles" 
+             id="inv_miles" 
+             placeholder="Enter vehicle mileage" 
+             required
+             value="<%= typeof inv_miles !== 'undefined' ? inv_miles : '' %>">
+    </div>
+
+    <!-- Vehicle Color -->
+    <div class="form-group">
+      <label for="inv_color">Color</label>
+      <input type="text" 
+             name="inv_color" 
+             id="inv_color" 
+             placeholder="Enter vehicle color" 
+             required
+             value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>">
+    </div>
+
+    <button type="submit">Add Vehicle</button>
+  </form>
+</body>
+</html>

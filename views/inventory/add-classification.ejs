@@ -1,0 +1,46 @@
+<!-- views/inventory/add-classification.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Classification</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1>Add New Classification</h1>
+
+  <!-- Flash Messages -->
+  <% if (messages && messages.notice) { %>
+    <div class="alert alert-info">
+      <% messages.notice.forEach(function(msg) { %>
+        <p><%= msg %></p>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <!-- Server-side Validation Errors -->
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <!-- Classification Form -->
+  <form action="/inv/add-classification" method="POST">
+    <div class="form-group">
+      <label for="classification_name">Classification Name</label>
+      <!-- Use the database field name for the classification name -->
+      <input type="text" 
+             name="classification_name" 
+             id="classification_name" 
+             placeholder="Enter classification name"
+             required
+             value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>">
+    </div>
+    <p>The classification name cannot contain spaces or special characters.</p>
+    <button type="submit">Add Classification</button>
+  </form>
+</body>
+</html>
