@@ -19,3 +19,17 @@
     </ul>
   </nav>
 
+<!-- New Content for managing Inventory -->
+ <h2>Manage Inventory</h2>
+ <p>Select a classification from the list below to view the corresponding inventory items.</p>
+
+ <!-- Render the classification select list -->
+  <%- classificationSelect %>
+
+  <!-- Empty table for inventory display via JavaScript -->
+   <table id="inventoryDisplay"></table>
+
+   <!-- Warning if JavaScript is disabled -->
+    <noscript>JavaScript must be enable to use this page.</noscript>
+    <!-- JavaScript file that will manage inventory display -->
+     <script src="../../js/inventory.js"></script>

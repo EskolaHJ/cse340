@@ -17,6 +17,7 @@ const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
 const utilities = require('./utilities/')
+const cookieParser = require("cookie-parser")
 
 /************
  * Serve Static Files
@@ -49,6 +50,9 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+// Cookie parser
+app.use(cookieParser())
 
 /* ***********************
  * View Engine and Templates

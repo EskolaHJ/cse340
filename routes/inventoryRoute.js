@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const invController = require("../controllers/invController");
 const invValidate = require("../utilities/inventory-validation"); // if you have validation for inventory & classification
-
+const utilities = require("../utilities/")
 // ===========================
 // Management Routes (Task One)
 // ===========================
@@ -51,5 +51,11 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 
 // Route to get vehicle details by ID
 router.get("/detail/:invId", invController.getVehicleDetail);
+
+/* *****************************
+ * New Inventory JSON Data Route
+ ***************************** */
+// This route will be called by your JavaScript to return inventory data as JSON.
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
 module.exports = router;

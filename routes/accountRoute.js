@@ -10,6 +10,9 @@ const utilities = require('../utilities'); // Ensure this resolves correctly
 // Access the accounts controller
 const accountController = require('../controllers/accountController');
 
+// Default route for account management with checkLogin middleware
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+
 // Route to build login view (choose one)
 router.get('/login', accountController.buildLoginView);
 
@@ -17,7 +20,7 @@ router.get('/login', accountController.buildLoginView);
 router.get('/register', accountController.buildRegister);
 
 // Route to post register
-router.post('/register', accountController.registerAccount)
+// router.post('/register', accountController.registerAccount)
 
 // Process the registration data
 router.post(
