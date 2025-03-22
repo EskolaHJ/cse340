@@ -1,0 +1,39 @@
+<% layout('layout') %>
+
+<!-- Page Title -->
+<h1><%= title %></h1>
+
+<!-- Optional: Include a specific header or navigation if not already in the layout -->
+<!-- For example, if your layout doesn't already include the nav: -->
+<%- include('../partials/nav') %>
+
+<!-- Main Content -->
+<main>
+  <p>Confirm Deletion - The delete is permanent.</p>
+  <form action="/inventory/delete" method="post">
+    <div>
+      <label for="inv_make">Make:</label>
+      <input type="text" id="inv_make" name="inv_make" value="<%= inv_make %>" readonly>
+    </div>
+    <div>
+      <label for="inv_model">Model:</label>
+      <input type="text" id="inv_model" name="inv_model" value="<%= inv_model %>" readonly>
+    </div>
+    <div>
+      <label for="inv_year">Year:</label>
+      <input type="text" id="inv_year" name="inv_year" value="<%= inv_year %>" readonly>
+    </div>
+    <div>
+      <label for="inv_price">Price:</label>
+      <input type="text" id="inv_price" name="inv_price" value="<%= inv_price %>" readonly>
+    </div>
+    <!-- Hidden field to send the inventory id -->
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+    <div>
+      <input type="submit" value="Delete">
+    </div>
+  </form>
+</main>
+
+<!-- Optional: Footer if not already included in your layout -->
+<%- include('../partials/footer') %>

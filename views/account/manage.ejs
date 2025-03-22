@@ -1,0 +1,14 @@
+<% layout('layout') %>
+
+<h1>Account Management</h1>
+
+<% if (typeof user !== 'undefined' && user) { %>
+  <h2>Welcome <%= user.first_name %></h2>
+  <% if (user.account_type === 'Employee' || user.account_type === 'Admin') { %>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv/">Manage Inventory</a></p>
+  <% } %>
+  <p><a href="/account/update/<%= user.account_id %>">Update Account Information</a></p>
+<% } else { %>
+  <p>Please log in to manage your account.</p>
+<% } %>

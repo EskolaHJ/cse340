@@ -238,4 +238,115 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 }
 
+/*************************
+ * Build Delete Confirmation view
+ * **********************/
+invCont.buildDeleteView = async function (req, res, next) {
+  try {
+    // Get the inventory id from the URL parameter
+    const inv_id = req.params.inv_id;
+
+    // Retrieve the navigation
+    const nav = await utilities.getNav();
+
+    // Get the vehicle details for the given inventory id
+    const vehicle = await invModel.getVehicleById(inv_id);
+
+    if (!vehicle) {
+      req.flash("notice", "No inventory item found.");
+      return res.redirect("/inventory");
+    }
+
+    // Create a title for the delete view using the vehicle's make and model
+    const title = `Delete ${vehicle.inv_make} ${vehicle.inv_model}`;
+
+    // Render the delete confirmation view with read+-only details
+    res.render("inventory/delete-confirm", {
+      title,
+      nav,
+      errors: null,
+      inv_id: vehicle.inv_id,
+      inv_make: vehicle.inv_make,
+      inv_model: vehicle.inv_model,
+      inv_year: vehicle.inv_year,
+      inv_price: vehicle.inv_price
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/* **********************
+ * Delete Inventory Item
+ ********************** */
+invCont.deleteInventoryItem = async function (req, res, next) {
+  try {
+    // Retrieve and parse the inventory id from the form submission
+    const inv_id = parseInt(req.body.inv_id, 10)
+
+    // Call the model function to delete the inventory item
+    const result = await invModel.deleteInventoryItem(inv_id)
+
+    // Check if one row was affected
+    if (result.rowCount === 1) {
+      req.flash("notice", "Inventory item deleted successfully.")
+      res.redirect("/inventory")
+    } else {
+      req.flash("notice", "Inventory item deletion failed.")
+      res.redirect(`/inventory/delete/${inv_id}`)
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+/* ***************************
+ *  Build edit inventory view
+ * *************************** */
+invCont.editInventoryView = async function (req, res, next) {
+  try {
+    // Collect the inventory id from the URL and convert it to an integer
+    const inv_id = parseInt(req.params.inv_id, 10);
+
+    // Retrieve navigation (and any other necessary common data)
+    let nav = await utilities.getNav();
+
+    // Retrieve the inventory item data based on inv_id
+    const itemData = await invModel.getInventoryById(inv_id);
+    
+    if (!itemData) {
+      req.flash("notice", "Inventory item not found.");
+      return res.redirect("/inventory");
+    }
+
+    // Build the classification list, pre-selecting the item's classification
+    const classificationSelect = await utilities.buildClassificationList(itemData.classification_id);
+
+    // Build a title based on the inventory item’s make and model
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+
+    // Render the edit inventory view with all necessary data for pre-populating the form fields
+    res.render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      classificationSelect,
+      errors: null,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_description: itemData.inv_description,
+      inv_image: itemData.inv_image,
+      inv_thumbnail: itemData.inv_thumbnail,
+      inv_price: itemData.inv_price,
+      inv_miles: itemData.inv_miles,
+      inv_color: itemData.inv_color,
+      classification_id: itemData.classification_id
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 module.exports = invCont;

@@ -58,4 +58,17 @@ router.get("/detail/:invId", invController.getVehicleDetail);
 // This route will be called by your JavaScript to return inventory data as JSON.
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
+/*****************************
+ * New Delete Inventory Routes
+ * ***************************/
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteView))
+
+// Post: Process the deletion of an inventory item
+router.post("/delete", utilities.handleErrors(invController.deleteInventoryItem))
+
+/**************************
+ * New Modify Inventory Route
+ ************************ */
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView))
+
 module.exports = router;

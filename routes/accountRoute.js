@@ -36,5 +36,31 @@ router.post(
     }
 )
 
+// Route to display the account update view
+router.get("/update/:account_id", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateView))
+
+// Route to process account information update
+router.post(
+    "/update-info",
+    regValidate.accountUpdateRules(),
+    regValidate.checkAccountUpdateData,
+    utilities.handleErrors(accountController.updateAccountInfo)
+)
+
+// Route to process password change
+router.post(
+    "/change-password",
+    regValidate.passwordChangeRules(),
+    regValidate.checkPasswordChangeData,
+    utilities.handleErrors(accountController.changePassword)
+)
+
+// Route to logout
+router.get("/logout", (req, res) => {
+    res.clearCookie("token")
+    req.flash("notice", "You have been logged out.")
+    res.redirect("/")
+})
+
 // Export the router for use in your main application file
 module.exports = router;

@@ -3,6 +3,19 @@
         <a href="/" title="Return to home page">CSE Motors</a>
     </span>
     <div id="tools">
-        <a title="Click to log in" href="/account/login">My Account</a>
+        <% if (typeof user !== 'undefined' && user) { %>
+            <!-- When logged in, show account management and logout links -->
+            <a title="Manage your account" href="../account/manage.ejs">
+                <% if (user.account_type === 'Client') { %>
+                    Welcome Basic
+                <% } else { %>
+                    Welcome <%= user.first_name %>
+                <% } %>
+            </a>
+            <a title="Click to log out" href="../account/logout">Logout</a>
+        <% } else { %>
+            <!-- When not logged in, show My Account link -->
+            <a title="Click to log in" href="../account/login.ejs">My Account</a>
+        <% } %>
     </div>
 </header>
