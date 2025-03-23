@@ -145,7 +145,7 @@ validate.passwordChangeRules = () => {
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
-        // You can choose whether to enforce symbols here or not
+        // Optionally enforce symbols
       })
       .withMessage("Password must be at least 8 characters long and contain a mix of letters and numbers."),
   ];
@@ -168,6 +168,46 @@ validate.checkPasswordChangeData = async (req, res, next) => {
       account_lastname,
       account_email,
       message: null,
+    });
+    return;
+  }
+  next();
+};
+
+/* **********************************
+ * Login Data Validation Rules
+ * **********************************/
+validate.loginRules = () => {
+  return [
+    // Validate the email
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required."),
+    // Validate the password is provided
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide a password.")
+  ];
+};
+
+/* ***********************************
+ * Check login data and return errors or continue
+ *********************************** */
+validate.checkLoginData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    const { account_email } = req.body;
+    res.status(400).render("account/login", {
+      errors: errors.array(),
+      title: "Login",
+      nav,
+      account_email,
     });
     return;
   }

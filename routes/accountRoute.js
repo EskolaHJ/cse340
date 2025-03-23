@@ -31,10 +31,11 @@ router.post(
 )
 router.post(
     "/login",
-    (req, res) => {
-        res.status(200).send('login process')
-    }
-)
+    regValidate.loginRules(),
+    regValidate.checkLoginData,
+    utilities.handleErrors(accountController.accountLogin)
+  );
+  
 
 // Route to display the account update view
 router.get("/update/:account_id", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateView))

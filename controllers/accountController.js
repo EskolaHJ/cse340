@@ -9,6 +9,9 @@ const accountModel = require('../models/account-model')
 // Require bcryptjs package
 const bcrypt = require("bcryptjs")
 
+const jwt = require("jsonwebtoken");
+
+require("dotenv").config()
 
 /* ******************************
  * Deliver login view
@@ -115,6 +118,29 @@ async function buildUpdateView(req, res, next) {
 }
 
 /* **********************************
+ * Build Account Management View
+ * **********************************
+ * Renders the account management view.
+ */
+async function buildManagement(req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    // Assuming you store the logged-in user's info (perhaps set by your JWT middleware) in res.locals
+    const user = res.locals.accountData || {};
+    res.render("account/manage", {
+      title: "Account Management",
+      nav,
+      user,
+      errors: null,
+    });
+  } catch (error) {
+    console.error("Error in buildManagement:", error);
+    next(error);
+  }
+}
+
+
+/* **********************************
  * Update Account Information
  * **********************************
  * Processes the update of a user's account information (first name, last name, email).
@@ -174,11 +200,62 @@ async function changePassword(req, res, next) {
   }
 }
 
+/* ********************************
+ * Process Login Request
+ * ********************************
+ * Authenticates the user, creates a JWT, and sets it as a cookie.
+ */
+async function accountLogin(req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const { account_email, account_password } = req.body;
+
+    // Fetch account data based on the email provided
+    const accountData = await accountModel.getAccountByEmail(account_email);
+    if (!accountData) {
+      req.flash("notice", "Please check your credentials and try again.");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
+    }
+
+    // Compare the provided password with the stored hashed password
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
+      // Remove the password from the data for security
+      delete accountData.account_password;
+
+      // Create a JWT token with the account data as the payload
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 });
+      
+      // Set the JWT in a cookie; use 'secure: true' in production
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+      
+      // Redirect to the account management view
+      return res.redirect("/account");
+    } else {
+      req.flash("notice", "Please check your credentials and try again.");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = { 
   buildLoginView, 
   buildRegister, 
   registerAccount, 
   buildUpdateView, 
   updateAccountInfo, 
-  changePassword 
+  changePassword,
+  buildManagement,
+  accountLogin
 };
